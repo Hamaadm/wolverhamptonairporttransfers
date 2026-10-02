@@ -91,7 +91,7 @@
     .endpoint-panel{display:none}
     .endpoint-panel.active{display:block}
     .address-grid{display:grid;grid-template-columns:1.8fr .9fr .72fr;gap:6px}
-    .airport-grid{display:grid;grid-template-columns:1.55fr .68fr .78fr;gap:6px}
+    .airport-grid{display:grid;grid-template-columns:1.8fr .62fr .72fr;gap:6px}
     .airport-autocomplete{position:relative}
     .airport-suggestions{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);max-height:180px;overflow:auto;background:#fff;border:1px solid #cfdbea;border-radius:9px;box-shadow:0 12px 28px rgba(4,24,51,.16);z-index:40;padding:4px}
     .airport-suggestions.show{display:block}
@@ -112,6 +112,11 @@
     .travel-advice svg{width:17px;height:17px;stroke:var(--blue);fill:none;stroke-width:1.9;flex:0 0 auto;margin-top:1px}
     .travel-advice b{color:var(--navy)}
     .endpoint-card label{font-size:8.7px;margin-bottom:3px}
+    .location-row{display:flex;align-items:flex-end;gap:6px}
+    .location-row .field{flex:1}
+    .location-btn{height:32px;border:1px solid #c9d9ec;border-radius:8px;background:#eef5ff;color:var(--blue);font-size:9.5px;font-weight:850;padding:0 10px;cursor:pointer;white-space:nowrap}
+    .location-btn:hover{background:#e2efff}
+    .location-btn:disabled{opacity:.65;cursor:wait}
     .endpoint-card input,.endpoint-card select{height:32px;font-size:10.5px;padding:0 8px}
     .route-grid{align-items:stretch}
     .route-arrow{align-self:center}
@@ -188,7 +193,7 @@
 <body>
 <div class="shell">
   <header>
-    <a class="brand" href="#" aria-label="Wolverhampton Airport Transfers home"><img src="assets/New%20logo.png" alt="Wolverhampton Airport Transfers" alt="Wolverhampton Airport Transfers" /></a>
+    <a class="brand" href="#" aria-label="Wolverhampton Airport Transfers home"><img src="assets/New%20logo.png" alt="Wolverhampton Airport Transfers" /></a>
     <div class="header-actions">
       <a class="contact-chip" href="mailto:bookings@wolverhamptonairporttransfers.co.uk" title="Email Wolverhampton Airport Transfers">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
@@ -244,7 +249,7 @@
 
       <form id="bookingForm" action="https://formsubmit.co/bookings@wolverhamptonairporttransfers.co.uk" method="POST" autocomplete="on">
         <input type="hidden" name="_url" value="https://wolverhamptonairporttransfers.co.uk/" />
-        <input type="hidden" name="_subject" value="New BHX Airport Transfer Booking" />
+        <input type="hidden" name="_subject" value="New Wolverhampton Airport Transfer Booking" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_autoresponse" value="Thank you for your booking request with Wolverhampton Airport Transfers. We have received your journey details. Your booking is not yet confirmed; our team will review availability and the final fare and contact you shortly. Payment is made directly to your driver on the day. If you need to contact us, call 07498 019999 or email bookings@wolverhamptonairporttransfers.co.uk." />
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
@@ -275,15 +280,15 @@
             </div>
             <div class="endpoint-panel active" id="pickupAddressPanel">
               <div class="address-grid">
-                <div class="field"><label for="pickupAddress">Address *</label><input id="pickupAddress" autocomplete="address-line1" placeholder="Door number / name and road" /></div>
+                <div class="location-row"><div class="field"><label for="pickupAddress">Address *</label><input id="pickupAddress" autocomplete="address-line1" placeholder="Door number / name and road" /></div><button type="button" class="location-btn" id="useCurrentLocation">Use current location</button></div>
                 <div class="field"><label for="pickupTown">Town / city *</label><input id="pickupTown" autocomplete="address-level2" placeholder="Town / city" /></div>
                 <div class="field"><label for="pickupPostcode">Postcode *</label><input id="pickupPostcode" autocomplete="postal-code" placeholder="WV1 3JW" /></div>
               </div>
             </div>
             <div class="endpoint-panel" id="pickupAirportPanel">
               <div class="airport-grid">
-                <div class="field"><label for="pickupAirport">UK airport *</label><div class="airport-autocomplete"><input id="pickupAirport" class="airport-input" autocomplete="off" placeholder="Start typing e.g. BHX or Birmingham" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="pickupAirportSuggestions" role="listbox"></div></div></div>
-                <div class="field"><label for="pickupTerminal">Terminal *</label><input id="pickupTerminal" placeholder="e.g. T2" /></div>
+                <div class="field"><label for="pickupAirport">UK airport *</label><div class="airport-autocomplete"><input id="pickupAirport" class="airport-input" autocomplete="off" placeholder="e.g. BHX or Birmingham" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="pickupAirportSuggestions" role="listbox"></div></div></div>
+                <div class="field"><label for="pickupTerminal">Terminal (optional)</label><input id="pickupTerminal" placeholder="e.g. T2" /></div>
                 <div class="field"><label for="pickupFlight">Flight no.</label><input id="pickupFlight" placeholder="e.g. EK039" /></div>
               </div>
             </div>
@@ -308,8 +313,8 @@
             </div>
             <div class="endpoint-panel active" id="dropoffAirportPanel">
               <div class="airport-grid">
-                <div class="field"><label for="dropoffAirport">UK airport *</label><div class="airport-autocomplete"><input id="dropoffAirport" class="airport-input" autocomplete="off" placeholder="Start typing e.g. LHR or Heathrow" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="dropoffAirportSuggestions" role="listbox"></div></div></div>
-                <div class="field"><label for="dropoffTerminal">Terminal *</label><input id="dropoffTerminal" placeholder="e.g. T1" /></div>
+                <div class="field"><label for="dropoffAirport">UK airport *</label><div class="airport-autocomplete"><input id="dropoffAirport" class="airport-input" autocomplete="off" placeholder="e.g. LHR or Heathrow" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="dropoffAirportSuggestions" role="listbox"></div></div></div>
+                <div class="field"><label for="dropoffTerminal">Terminal (optional)</label><input id="dropoffTerminal" placeholder="e.g. T1" /></div>
                 <div class="field"><label for="dropoffFlight">Flight no.</label><input id="dropoffFlight" placeholder="e.g. EK039" /></div>
               </div>
             </div>
@@ -322,8 +327,8 @@
         </div>
 
         <div class="date-time-grid">
-          <div class="field"><label for="pickupDate">Pickup date *</label><div class="pretty-date"><input class="date-display" id="pickupDateDisplay" placeholder="Select date" readonly aria-label="Choose pickup date" /><input type="date" id="pickupDate" name="pickupDate" required aria-label="Pickup date" /></div></div>
-          <div class="field"><label for="pickupTimeHour">Pickup time *</label><div class="time-parts"><select id="pickupTimeHour" required aria-label="Pickup time"></select><select id="pickupTimePeriod" required aria-label="Pickup AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select></div></div>
+          <div class="field"><label for="pickupDate">Pickup date (optional)</label><div class="pretty-date"><input class="date-display" id="pickupDateDisplay" placeholder="Select date" readonly aria-label="Choose pickup date" /><input type="date" id="pickupDate" name="pickupDate" aria-label="Pickup date" /></div></div>
+          <div class="field"><label for="pickupTimeHour">Pickup time (optional)</label><div class="time-parts"><select id="pickupTimeHour" aria-label="Pickup time"></select><select id="pickupTimePeriod" aria-label="Pickup AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select></div></div>
         </div>
         </div>
 
@@ -352,8 +357,8 @@
               </div>
               <div class="endpoint-panel active" id="returnPickupAirportPanel">
                 <div class="airport-grid">
-                  <div class="field"><label for="returnPickupAirport">UK airport *</label><div class="airport-autocomplete"><input id="returnPickupAirport" class="airport-input" autocomplete="off" placeholder="Start typing airport or code" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="returnPickupAirportSuggestions" role="listbox"></div></div></div>
-                  <div class="field"><label for="returnPickupTerminal">Terminal *</label><input id="returnPickupTerminal" placeholder="Terminal" /></div>
+                  <div class="field"><label for="returnPickupAirport">UK airport *</label><div class="airport-autocomplete"><input id="returnPickupAirport" class="airport-input" autocomplete="off" placeholder="e.g. BHX or Birmingham" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="returnPickupAirportSuggestions" role="listbox"></div></div></div>
+                  <div class="field"><label for="returnPickupTerminal">Terminal (optional)</label><input id="returnPickupTerminal" placeholder="Terminal" /></div>
                   <div class="field"><label for="returnPickupFlight">Flight no.</label><input id="returnPickupFlight" placeholder="Flight" /></div>
                 </div>
               </div>
@@ -376,8 +381,8 @@
               </div>
               <div class="endpoint-panel" id="returnDropoffAirportPanel">
                 <div class="airport-grid">
-                  <div class="field"><label for="returnDropoffAirport">UK airport *</label><div class="airport-autocomplete"><input id="returnDropoffAirport" class="airport-input" autocomplete="off" placeholder="Start typing airport or code" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="returnDropoffAirportSuggestions" role="listbox"></div></div></div>
-                  <div class="field"><label for="returnDropoffTerminal">Terminal *</label><input id="returnDropoffTerminal" placeholder="Terminal" /></div>
+                  <div class="field"><label for="returnDropoffAirport">UK airport *</label><div class="airport-autocomplete"><input id="returnDropoffAirport" class="airport-input" autocomplete="off" placeholder="e.g. BHX or Birmingham" aria-autocomplete="list" aria-expanded="false" /><div class="airport-suggestions" id="returnDropoffAirportSuggestions" role="listbox"></div></div></div>
+                  <div class="field"><label for="returnDropoffTerminal">Terminal (optional)</label><input id="returnDropoffTerminal" placeholder="Terminal" /></div>
                   <div class="field"><label for="returnDropoffFlight">Flight no.</label><input id="returnDropoffFlight" placeholder="Flight" /></div>
                 </div>
               </div>
@@ -390,8 +395,8 @@
           </div>
 
           <div class="date-time-grid return-datetime">
-            <div class="field"><label for="returnDate">Return pickup date *</label><div class="pretty-date"><input class="date-display" id="returnDateDisplay" placeholder="Select date" readonly aria-label="Choose return pickup date" /><input type="date" id="returnDate" name="returnDate" aria-label="Return pickup date" /></div></div>
-            <div class="field"><label for="returnTimeHour">Return pickup time *</label><div class="time-parts"><select id="returnTimeHour" aria-label="Return pickup time"></select><select id="returnTimePeriod" aria-label="Return AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select></div></div>
+            <div class="field"><label for="returnDate">Return pickup date (optional)</label><div class="pretty-date"><input class="date-display" id="returnDateDisplay" placeholder="Select date" readonly aria-label="Choose return pickup date" /><input type="date" id="returnDate" name="returnDate" aria-label="Return pickup date" /></div></div>
+            <div class="field"><label for="returnTimeHour">Return pickup time (optional)</label><div class="time-parts"><select id="returnTimeHour" aria-label="Return pickup time"></select><select id="returnTimePeriod" aria-label="Return AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select></div></div>
           </div>
         </div>
 
@@ -495,6 +500,45 @@
   const endpointPrefixes = ['pickup','dropoff','returnPickup','returnDropoff'];
   let latestQuote = null;
   let quoteTimer;
+
+  const currentLocationBtn = $('useCurrentLocation');
+  if(currentLocationBtn){
+    currentLocationBtn.addEventListener('click',()=>{
+      if(!navigator.geolocation){
+        showToast('Current location is not supported by this browser.');
+        return;
+      }
+      currentLocationBtn.disabled=true;
+      currentLocationBtn.textContent='Locating…';
+      navigator.geolocation.getCurrentPosition(async pos=>{
+        try{
+          const {latitude,longitude}=pos.coords;
+          const res=await fetch('https://nominatim.openstreetmap.org/reverse?'+new URLSearchParams({
+            lat:String(latitude),lon:String(longitude),format:'jsonv2',addressdetails:'1'
+          }),{headers:{'Accept':'application/json'}});
+          if(!res.ok) throw new Error('reverse');
+          const data=await res.json();
+          const a=data.address||{};
+          const road=[a.house_number,a.road||a.pedestrian||a.residential||a.neighbourhood].filter(Boolean).join(' ');
+          const town=a.city||a.town||a.village||a.suburb||'';
+          $('pickupAddress').value=road || data.display_name || '';
+          $('pickupTown').value=town;
+          $('pickupPostcode').value=(a.postcode||'').toUpperCase();
+          showToast('Current pickup location added.');
+          queueQuote();
+        }catch(e){
+          showToast('We could not fill your address automatically.');
+        }finally{
+          currentLocationBtn.disabled=false;
+          currentLocationBtn.textContent='Use current location';
+        }
+      },err=>{
+        currentLocationBtn.disabled=false;
+        currentLocationBtn.textContent='Use current location';
+        showToast(err.code===1 ? 'Location permission was not allowed.' : 'Unable to get your current location.');
+      },{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
+    });
+  }
 
   const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
   const compact = s => norm(s).replace(/ /g,'');
@@ -849,9 +893,6 @@
 
   roundTrip.addEventListener('change',()=>{
     journeyTabs.classList.toggle('show',roundTrip.checked);
-    $('returnDate').required=roundTrip.checked;
-    $('returnTimeHour').required=roundTrip.checked;
-    $('returnTimePeriod').required=roundTrip.checked;
     setEndpointType('returnPickup',endpointTypes.returnPickup,false);
     setEndpointType('returnDropoff',endpointTypes.returnDropoff,false);
     if(roundTrip.checked){
